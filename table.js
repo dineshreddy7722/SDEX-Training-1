@@ -57,17 +57,32 @@ fetch("https://jsonplaceholder.typicode.com/todos")
       let completed = document.createElement("td");
       completed.innerText = elem.completed;
 
-      let deleteButton = document.createElement("button");
-      deleteButton.innerHTML= "Delete";
-     
-
-      let editButton = document.createElement("button");
-      editButton.innerHTML= "Edit";
-
-      tr.append(userId,id,title,completed,deleteButton,editButton);
+      let deleteButton = document.createElement("td");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "Delete";
+      deleteBtn.addEventListener("click", function () {
+        tr.remove();
+      });
+      deleteButton.appendChild(deleteBtn);
+  
+      let editButton = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.innerText = "Edit";
+      editBtn.addEventListener("click", function () {
+        editRow = tr;
+        document.getElementById("userid").value = newRow.cells[0].innerHTML;
+        document.getElementById("id").value = newRow.cells[1].innerHTML;
+        document.getElementById("title").value = newRow.cells[2].innerHTML;
+        table.editRow(newRow.rowIndex);
+      });
+      editButton.appendChild(editBtn);
+  
+      tr.append(userId, id, title, completed, deleteButton, editButton);
       document.querySelector("tbody").append(tr);
     });
   }
+  
+  
 
 
 // fetch('https://jsonplaceholder.typicode.com/todos/')
