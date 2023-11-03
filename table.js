@@ -45,16 +45,44 @@ fetch("https://jsonplaceholder.typicode.com/todos")
     console.log(data);
     data.map((elem) => {
       let tr = document.createElement("tr");
+      let userId = document.createElement("td");
+      userId.innerText = elem.userId;
+
       let id = document.createElement("td");
       id.innerText = elem.id;
 
-      let name = document.createElement("td");
-      name.innerText = elem.title;
+      let title = document.createElement("td");
+      title.innerText = elem.title;
 
-      let status = document.createElement("td");
-      status.innerText = elem.completed;
-      tr.append(id, name, status);
+      let completed = document.createElement("td");
+      completed.innerText = elem.completed;
+
+      let deleteButton = document.createElement("button");
+      deleteButton.innerHTML= "Delete";
+     
+
+      let editButton = document.createElement("button");
+      editButton.innerHTML= "Edit";
+
+      tr.append(userId,id,title,completed,deleteButton,editButton);
       document.querySelector("tbody").append(tr);
     });
   }
 
+
+// fetch('https://jsonplaceholder.typicode.com/todos/')
+//     .then(response => {
+//         if (response.ok) {
+//             return response.json()
+//         }
+//         throw new Error('something went wrong');
+//     })
+//     .then(data => generateTable(data))
+//     .catch(myError);
+// function myError(error) {
+//     console.log(error);
+// }
+// function generateTable(data) {
+//   for (let i = 0; i < data.length; i++) {
+//       console.log(data[i].userid, data[i].id, data[i].title, data[i].completed);
+// }}
