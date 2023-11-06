@@ -75,4 +75,10 @@ body, html {
     color: #333;
     margin-bottom: 5px;
   }
-  
+  @media (max-width: 600px) {
+    #container {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 10px;
+    }
+  }
