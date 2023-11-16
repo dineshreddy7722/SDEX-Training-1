@@ -2,7 +2,7 @@
 body, html {
     margin: auto;
     padding:15px;
-    background-color: burlywood;
+    /* background-color: burlywood; */
     font-family: Arial, sans-serif;
   }
 
@@ -14,7 +14,7 @@ body, html {
     padding: 10px;
     max-width: 900px;
     margin: auto;
-    background-color:white;
+    /* background-color:white; */
     border: 1px solid black;
     border-radius: 10px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 1);
@@ -24,7 +24,7 @@ body, html {
   table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
+    background-color: rgb(19, 180, 239);
     border: 1px solid #ddd;
     border-radius: 5px;
   }
@@ -50,7 +50,7 @@ body, html {
   }
   #completed{
     margin-top: -16px;
-    margin-left: 100px;
+    margin-left: 110px;
   }
   #com{
     margin-top: -30px;
@@ -75,10 +75,43 @@ body, html {
     color: #333;
     margin-bottom: 5px;
   }
+
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  /* Dark mode styles */
+  body.dark-mode {
+    background-color: #111;
+    color: #fff;
+  }
+  
+  /* Update specific element styles for dark mode */
+  body.dark-mode #container {
+    background-color: #222;
+    border-color: #444;
+  }
+  
+  body.dark-mode table {
+    background-color: #333;
+    color: #fff;
+  }
+
   @media (max-width: 600px) {
     #container {
-      grid-template-columns: 1fr;
-      gap: 10px;
-      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+      padding: 5%;
+      height: 100%;
+
+    }
+    #tableform{
+      height: 100%;
+      width: 70%;
+      margin-top: 0px;
+      margin-left: 20%;
+      text-align: center;
+      
     }
   }

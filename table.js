@@ -1,11 +1,11 @@
 const form = document.getElementById("tableForm");
 const table = document.getElementById("myData");
-const pageSize = 10; // Number of rows per page
-let editRow = null; // Global variable to track the row being edited
-let currentPage = 1; // Current page
+const pageSize = 10; 
+let editRow = null; 
+let currentPage = 0; 
 
 form.addEventListener("submit", function (event) {
-  event.preventDefault();
+   event.preventDefault();
 
   if (editRow) {
     // If editRow is not null, update the row with the edited values
@@ -13,6 +13,8 @@ form.addEventListener("submit", function (event) {
     editRow.cells[1].innerHTML = document.getElementById("id").value;
     editRow.cells[2].innerHTML = document.getElementById("title").value;
     editRow.cells[3].innerHTML = document.getElementById("completed").checked ? "yes" : "no";
+    editRow.cells[4].innerHTML = "<button>Delete</button>";
+    editRow.cells[5].innerHTML = "<button>Edit</button>";
 
     // Reset the editRow variable to null
     editRow = null;
@@ -27,10 +29,37 @@ form.addEventListener("submit", function (event) {
     const cellID = newRow.insertCell(1);
     const cellTitle = newRow.insertCell(2);
     const cellCompleted = newRow.insertCell(3);
+    const cellDelete = newRow.insertCell(4);
+    const cellEdit = newRow.insertCell(5);
     cellUserID.innerHTML = userID;
     cellID.innerHTML = id;
     cellTitle.innerHTML = title;
     cellCompleted.innerHTML = completed ? "yes" : "no";
+
+
+    let deleteButton = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete";
+    deleteBtn.addEventListener("click", function () {
+      newRow.remove();
+    });
+    deleteButton.appendChild(deleteBtn);
+
+    let editButton = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.innerText = "Edit";
+    editBtn.addEventListener("click", function () {
+      editRow = newRow; // Set the editRow to the current row
+      document.getElementById("userid").value = newRow.cells[0].innerHTML;
+      document.getElementById("id").value = newRow.cells[1].innerHTML;
+      document.getElementById("title").value = newRow.cells[2].innerHTML;
+      document.getElementById("completed").checked = newRow.cells[3].innerHTML === "yes";
+
+    });
+    editButton.appendChild(editBtn);
+    
+    cellDelete.appendChild(deleteBtn);
+    cellEdit.appendChild(editBtn)
   }
 
   form.reset();
@@ -72,24 +101,27 @@ function displayTable(data) {
       document.getElementById("id").value = tr.cells[1].innerHTML;
       document.getElementById("title").value = tr.cells[2].innerHTML;
       document.getElementById("completed").checked = tr.cells[3].innerHTML === "yes";
+
     });
     editButton.appendChild(editBtn);
 
     tr.append(userId, id, title, completed, deleteButton, editButton);
-    table.querySelector("tbody").append(tr);
+    table.append(tr);
   });
 
-  // Initialize pagination
+ // Initialize pagination
   updatePagination();
 }
 
 function updatePagination() {
-  const rows = table.querySelector("tbody").rows;
+  const rows = table.rows;
   const pageCount = Math.ceil(rows.length / pageSize);
 
   // Display only the rows for the current page
   for (let i = 0; i < rows.length; i++) {
-    rows[i].style.display = i >= (currentPage - 1) * pageSize && i < currentPage * pageSize ? "" : "none";
+    let startPoint = pageCount * pageSize;
+    let endPoint = startPoint + pageCount;
+    rows[i].style.display = i >= (currentPage) * pageSize && i < (currentPage+1) * pageSize ? "" : "none";
   }
 
   // Create pagination buttons (Previous, 1, 2, 3, Next)
@@ -139,3 +171,12 @@ function updatePagination() {
 
   table.parentElement.appendChild(paginationDiv);
 }
+
+function toggleDarkMode() {
+  const body = document.body;
+  body.classList.toggle('dark-mode');
+}
+
+// Event listener for the dark mode toggle button
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', toggleDarkMode);
